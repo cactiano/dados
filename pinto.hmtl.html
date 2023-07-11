@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RPG Dice Roller</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .dice {
+            width: 100px;
+            height: 100px;
+            background-image: url("dice-icon.png");
+            background-size: cover;
+            cursor: pointer;
+        }
+
+        .roll-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .roll-container label {
+            margin-right: 5px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .tab {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+    <script>
+        function rollDice(sides, bonus) {
+            var result = Math.floor(Math.random() * sides) + 1 + bonus;
+            document.getElementById("result").innerHTML = "Resultado: " + result;
+        }
+
+        function changeTab(tabId) {
+            var tabs = document.getElementsByClassName("tab");
+            var tabContents = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+                tabContents[i].classList.remove("active");
+            }
+            document.getElementById(tabId).classList.add("active");
+            document.getElementById(tabId + "-content").classList.add("active");
+        }
+
+        function toggleTabs() {
+            var tabs = document.getElementsByClassName("tab");
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.toggle("hidden");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>RPG Dice Roller</h1>
+
+    <button onclick="toggleTabs()">Alternar Abas</button>
+
+    <div class="tabs">
+        <div id="dice-tab" class="tab" onclick="changeTab('dice-tab')">Dados</div>
+        <div id="map-tab" class="tab" onclick="changeTab('map-tab')">Mapas</div>
+    </div>
+
+    <div id="dice-tab-content" class="tab-content active">
+        <div class="roll-container">
+            <h2>D20</h2>
+            <label for="bonus-d20">Bônus:</label>
+            <input type="number" id="bonus-d20">
+            <button onclick="rollDice(20, parseInt(document.getElementById('bonus-d20').value))">Roll D20</button>
+        </div>
+
+        <div class="roll-container">
+            <h2>D6</h2>
+            <label for="bonus-d6">Bônus:</label>
+            <input type="number" id="bonus-d6">
+            <button onclick="rollDice(6, parseInt(document.getElementById('bonus-d6').value))">Roll D6</button>
+        </div>
+
+        <div class="roll-container">
+            <h2>D12</h2>
+            <label for="bonus-d12">Bônus:</label>
+            <input type="number" id="bonus-d12">
+            <button onclick="rollDice(12, parseInt(document.getElementById('bonus-d12').value))">Roll D12</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <div id="map-tab-content" class="tab-content">
+        <!-- Conteúdo da aba de mapas -->
+        <h2>Mapas</h2>
+        <p>Aqui você pode adicionar o conteúdo relacionado aos mapas.</p>
+    </div>
+
+    <script>
+        changeTab('dice-tab'); // Define a aba "Dados" como ativa por padrão quando a página carrega.
+    </script>
+</body>
+</html>
